@@ -1,6 +1,21 @@
 import React, { useState } from 'react';
 import { BsFillCartPlusFill } from "react-icons/bs";
 import Order from './Order';
+
+const showOrders = (props) => {
+  return (<div>
+    {props.orders.map(el => (
+      <Order key={el.id} item={el} />
+    ))}
+  </div>)
+}
+
+const showNothing = () => {
+  return (<div className='empty'>
+  <h2>Кошик порожній.</h2>
+  </div>)
+}
+
 export default function Header(props) {
   let [cartOpen, setCartOpen] = useState(false)
   return (
@@ -18,9 +33,8 @@ export default function Header(props) {
                className={`shop-cart-button ${cartOpen && 'active'}`} />
                {cartOpen && (
                 <div className='shop-cart'>
-                  {props.orders.map(el => (
-                    <Order key={el.id} item={el} />
-                  ))}
+                  {props.orders.length > 0 ?
+                  showOrders(props) : showNothing()}
                   </div>
                )}
         </div>
